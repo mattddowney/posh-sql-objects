@@ -3,6 +3,7 @@
 Convenience functions for interacting with MS SQL Server's system tables.
 
 Useful for:
+* Searching a database for objects (stored procedures, functions, views) where the source definition contains arbitrary text
 * Getting object definitions of all objects in a database
 * Getting the names of all objects in a database
 
@@ -19,6 +20,10 @@ Import the module into powershell:
 `Import-Module -Name posh-sql-objects`
 
 ## Usage ##
+
+Find objects containing "text" in a database:
+
+`Find-DbObjects -Server ServerName -Database DbName -DefinitionText "text"`
 
 List a server's databases:
 
