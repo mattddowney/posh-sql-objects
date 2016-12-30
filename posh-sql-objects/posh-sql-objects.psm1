@@ -7,6 +7,7 @@ Try {
 }
 
 $local:exportfunctions = @(
+    'Find-DbObjects',
     'Get-DbFunctionDefinitions',
     'Get-DbFunctions',
     'Get-DbObjectDefinition',

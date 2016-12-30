@@ -28,6 +28,56 @@ function Add-DefinitionsToObject
 
 <#
 .SYNOPSIS
+ Find objects whose definition text contains a value
+
+.DESCRIPTION
+ Find objects whose definition text contains a value
+
+.PARAMETER Database
+ The database to find objects in
+
+.PARAMETER Server
+ The server where the database resides
+
+.PARAMETER DefinitionText
+ The value to search objects for
+
+#>
+function Find-DbObjects
+{
+    param(
+        [Parameter(Mandatory=$true)][string]$Database,
+        [Parameter(Mandatory=$true)][string]$Server,
+        [Parameter(Mandatory=$true)][string]$DefinitionText
+    )
+    
+    $query = @"
+        SELECT DISTINCT
+            o.name AS Name,
+            s.name AS [Schema],
+            o.type_desc AS [Type],
+            m.[definition] AS [Definition]
+        FROM
+	        $Database.sys.sql_modules AS m
+	        JOIN
+		        $Database.sys.objects AS o
+		        ON
+			        m.[object_id] = o.[object_id]
+	        JOIN
+		        $Database.sys.schemas AS s
+		        ON
+			        o.[schema_id] = s.[schema_id]
+        WHERE
+	        m.definition LIKE '%$DefinitionText%'
+"@
+
+    $result = Invoke-Sqlcmd -ServerInstance $Server -Query $query
+
+    return $result
+}
+
+<#
+.SYNOPSIS
  Get the definition for all functions in a database
 
 .DESCRIPTION
