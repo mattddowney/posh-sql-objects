@@ -3,7 +3,7 @@
 Convenience functions for interacting with MS SQL Server's system tables.
 
 Useful for:
-* Searching a database for objects (stored procedures, functions, views) where the source definition contains arbitrary text
+* Searching a database for objects (stored procedures, functions, views) containing text
 * Getting object definitions of all objects in a database
 * Getting the names of all objects in a database
 
